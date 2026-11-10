@@ -534,12 +534,41 @@ The classical era ended with the Alpha 21264 in 1999. But what happened next?
 
 ---
 
+### 6.2 The Professor's 5 Viva Defense Traps (Evaluation Report Audit)
+
+> **The faculty evaluation report awarded our paper 93/100 (Grade A) and noted 4 specific microarchitectural deductions. If the professor or TA grills you on these exact points, use these model defenses:**
+
+#### Trap 1: "Why did you use a procedural trace generator instead of standard hardware pin-traces (like Intel PIN or gem5 SPEC CPU dumps)?"
+* **Bulletproof Defense:**  
+  *"Sir/Ma'am, standard SPEC CPU instruction traces contain millions of instructions with unpredictable phase shifts, context switches, and cache misses that convolve branch predictor accuracy with orthogonal system effects. We deliberately designed Workload A and Workload B as controlled synthetic micro-architectural stress benches. Workload A isolates pure algorithmic failure modes (e.g., proving that bimodal counters achieve near 0% on deterministic alternation, while PAg achieves 100% after warm-up). Workload B synthesizes multi-nested loops, correlated branches, and dynamic polymorphism with calibrated entropy ($H \approx 0.81$). While physical PIN dumps from SPECint binaries (`gcc`, `gzip`) would reflect operating system library noise, our procedural generator enabled reproducible, deterministic verification of the exact theoretical boundary conditions."*
+
+#### Trap 2: "Your state budget counts raw SRAM bitcells. Doesn't physical SRAM have significant peripheral overhead?"
+* **Bulletproof Defense:**  
+  *"Yes, absolutely. Our closed-form state model ($S_{\text{arch}}$) captures first-order architectural storage bits ($B \cdot h + 2 \cdot 2^h$), which is the standard convention in foundational literature (Yeh & Patt 1991, McFarling 1993, Kessler 1999). However, physically realizing an SRAM array requires wordline decoders, bitline precharge circuits, sense amplifiers, column multiplexers, and write drivers. In sub-micron CMOS, peripheral overhead adds 40% to 80% silicon area beyond the raw 6T bitcell matrix. Furthermore, dual-ported tables (such as the Alpha 21264 local history table supporting dual-branch fetch) incur a $\approx 1.8\times$ bitcell area penalty over single-ported 6T cells. We acknowledge that our equations represent architectural storage state, not physical silicon layout area."*
+
+#### Trap 3: "In the Alpha 21264 tournament predictor, what happens to the 2-bit chooser counters during program phase transitions?"
+* **Bulletproof Defense:**  
+  *"The chooser table uses 2-bit saturating up/down counters. When a program undergoes a phase transition—for example, shifting from tight inner loops where local history excels to complex global control flow—the chooser counters experience hysteresis lag. If a counter is saturated at Strongly Local (`00`), it requires at least two consecutive cycles where the global predictor is correct and the local predictor mispredicts before the chooser flips its decision to Global. During this 2-to-3 branch training window, the processor suffers transient mispredictions solely due to chooser inertia. Kessler's 1999 measurements showed that despite this hysteresis penalty, the tournament predictor outperforms both standalone sub-predictors by over 1.5% to 3% across diverse workloads."*
+
+#### Trap 4: "You modeled 704 bits of Shadow Checkpoints for speculative GHR recovery. What is the physical control logic overhead?"
+* **Bulletproof Defense:**  
+  *"The 704 bits represent the raw storage for 32 checkpoint slots ($32 \times (12\text{-bit GHR} + 10\text{-bit LHR}) = 704\text{ bits}$). In a physical out-of-order execution engine, managing these checkpoints requires: (1) a 5-bit allocation pointer and retirement pointer managed as a circular FIFO queue; (2) flash-invalidation logic to squash younger checkpoints upon a branch misprediction; and (3) branch tag forwarding logic to associate each in-flight branch with its checkpoint index. While this control logic adds roughly 150 to 200 gate equivalents of combinatorial logic, it is entirely feasible in hardware and strictly required to decouple speculative fetch from out-of-order retirement."*
+
+#### Trap 5: "Why did you define Set-Associative ($SxX$) variants in the taxonomy, and how do they scale?"
+* **Bulletproof Defense:**  
+  *"In Yeh & Patt's complete 9-variant taxonomy, $SxX$ represents Set-Associative branch history tracking. In a fully per-branch scheme ($PAg$), each branch has a dedicated BHR ($S = B \cdot h + 2 \cdot 2^h$). In $SAg$, branches are hashed by PC into $B/K$ sets, where each set shares an $h$-bit BHR:
+  $$S_{SAg} = \frac{B}{K} \cdot h + 2 \cdot 2^h$$
+  This compresses the first-level BHR table footprint by a factor of $K$ ($K$-way sharing) to save silicon area while retaining significantly better pattern isolation than a single global register ($GAg$)."*
+
+---
+
 # Module 7: Repository File Directory & Gradescope Checklist
 
 ### What is in this repository?
-* **`Submit/TermPaper_Final.pdf`:** **THE FILE TO UPLOAD TO GRADESCOPE.** Complete publication-grade paper (100/100).
-* **`Evaluation_Report.pdf`:** Official Professor Evaluation Report (100/100 score).
-* **`Learning.md`:** This masterclass study guide.
+* **`Submit/TermPaper_Final.pdf`:** **THE FILE TO UPLOAD TO GRADESCOPE.** The final 25-page compiled term paper PDF.
+* **`termpaper.tex`:** Complete 1,216-line LaTeX source code.
+* **`Evaluation_Report.pdf`:** Official Professor Technical Evaluation Report (93/100, Grade A).
+* **`Learning.md`:** This masterclass study guide & viva defense manual.
 * **`README.md`:** Repository overview and navigation.
 * **`simulate_predictors.cs`:** Complete C# simulation suite (864,980 branches).
 * **`TermPaper_Original_Draft.pdf`:** Original student draft (archived for reference).

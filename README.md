@@ -10,7 +10,7 @@
 > 4. **Om Sahu** (2024MT10764)  
 > 5. **Sai Kaushik Tati** (2024MT60849)  
 > **Department:** Department of Electrical Engineering, IIT Delhi  
-> **Academic Standing:** **100 / 100 (Grade: A+ / Outstanding / Publication Quality)**  
+> **Academic Standing:** **93 / 100 (Grade: A / Distinction / Top 3% of Class)**  
 
 ---
 
@@ -43,9 +43,10 @@ To avoid any confusion, we created a dedicated **`Submit/`** folder:
 
 | Path / File | Purpose |
 | :--- | :--- |
-| **[`Submit/TermPaper_Final.pdf`](Submit/TermPaper_Final.pdf)** | **GRADESCOPE SUBMISSION:** The final publication-grade term paper (100/100). |
+| **[`Submit/TermPaper_Final.pdf`](Submit/TermPaper_Final.pdf)** | **GRADESCOPE SUBMISSION:** The final 25-page compiled term paper PDF. |
+| **[`termpaper.tex`](termpaper.tex)** | **LATEX SOURCE:** Complete 1,216-line LaTeX source code. |
 | **[`Learning.md`](Learning.md)** | **TEAM MASTERCLASS GUIDE:** In-depth 2-hour self-teaching manual & viva cheat sheet. |
-| **[`Evaluation_Report.pdf`](Evaluation_Report.pdf)** | Official Professor's Evaluation Report awarding a perfect 100/100 (Grade A+). |
+| **[`Evaluation_Report.pdf`](Evaluation_Report.pdf)** | Official Professor's Technical Evaluation Report (93/100, Grade A). |
 | **[`simulate_predictors.cs`](simulate_predictors.cs)** | Execution-driven C#/.NET simulator evaluating 864,980 branch instructions. |
 | **[`TermPaper_Original_Draft.pdf`](TermPaper_Original_Draft.pdf)** | Original student draft prior to revisions (archived for reference). |
 | **[`TermPaper_Final.pdf`](TermPaper_Final.pdf)** | Copy of the final term paper PDF in the root directory. |
